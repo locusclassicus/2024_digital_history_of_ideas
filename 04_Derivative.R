@@ -1,6 +1,5 @@
 load("./data/data_sel.Rdata")
 
-
 df <- data_sel |>
   dplyr::select(item2, rank, dpf) |>
   filter(dpf > 0)

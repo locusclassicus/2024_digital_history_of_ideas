@@ -15,6 +15,7 @@ stopwords_ru <- c(
 
 # уберем повторы и упорядочим по алфавиту
 stopwords_ru <- sort(unique(stopwords_ru))
+stopwords_ru <- c(stopwords_ru, "это", "весь", "сей", "твой")
 
 liza_df <- liza_df |> 
   anti_join(tibble(lemma = stopwords_ru))
@@ -23,7 +24,7 @@ liza_df <- liza_df |>
 liza_wind <- liza_df |> 
   slide_windows(10L)
 
-#save(liza_wind, file = "./data/liza_wind.Rdata")
+save(liza_wind, file = "./data/liza_wind.Rdata")
 
 liza_pmi <- liza_wind |> 
   pairwise_pmi(lemma, window_id)

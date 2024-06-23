@@ -1,20 +1,23 @@
 library(tidyr)
+library(widyr)
+library(tidyverse)
 source("./helper_functions/dpf_function.R")
 load("./data/liza_wind.Rdata")
 load("./data/liza_freq.Rdata")
 
 liza_count <- liza_wind |> 
-  pairwise_count(lemma, window_id)
+  pairwise_count(lemma, window_id) |> 
+  filter(n > 4)
 
 liza_count_w <- liza_count |> 
   pivot_wider(names_from = item2, values_from = n, values_fill = 0) |> 
   tibble::column_to_rownames("item1") |> 
   as.matrix()
 
-#save(liza_count_w, file = "./data/liza_count_w.Rdata")
+save(liza_count_w, file = "./data/liza_count_w.Rdata")
 
 #load("./data/liza_count_w.Rdata")
-liza_dpf <- dpf(liza_count_w, alpha = 0.78) |> 
+liza_dpf <- dpf(liza_count_w, alpha = 0.7) |> 
   as.data.frame()
 
 liza_dfp_l <- liza_dpf |> 
@@ -29,7 +32,7 @@ save(liza_join, file = "./data/liza_join.Rdata")
 
 data_sel <- liza_join |>
   filter(item1 == "слеза") |>
-  filter(tf_perc < 2) |> 
+  filter(tf_perc < 2, dpf > 0) |> 
   arrange(-dpf) |>
   mutate(rank = row_number())
 
