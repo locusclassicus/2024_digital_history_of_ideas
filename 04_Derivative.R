@@ -1,20 +1,24 @@
-load("./data/data_sel.Rdata")
+# based on code by Gregory Demin, see: https://t.me/c/1855699844/853
+load("./data/sel_dpf.Rdata")
+load("./data/measures_all.Rdata")
 
-df <- data_sel |>
-  dplyr::select(item2, rank, dpf) |>
-  filter(dpf > 0)
+# sel_dpf <- measures_all |> 
+#   filter(item1 == "поле")
 
+df <- sel_dpf |>
+  mutate(rank = row_number())
 
 df <- df |>
   mutate(huge_dpf = dpf / min(df$dpf))
 
 mod1 = lm(huge_dpf ~ log(rank), data=df)
+summary(mod1)
 
 df <- df |>
   mutate(predicted = predict(mod1))
 
 # производная логарифма = 1/x
-# у нас коэффициент при логарифме coef(mod1)[2] = -10.95599 ~= 11
+# у нас коэффициент при логарифме coef(mod1)[2] = -17.45 ~= -17
 # ищем, где производная логарифма = -1 -> coef(mod1)[2]/x = -1, x = -coef(mod1)[2] 
 
 x_deriv_1 = round(-coef(mod1)[2]) 
@@ -31,8 +35,11 @@ df |>
   geom_line(aes(rank, predicted), show.legend = FALSE) +
   geom_abline(intercept = const, slope = -1, color = "tomato") +
   geom_hline(yintercept = df$predicted[x_deriv_1], color = "tomato", linetype = "dashed") +
-  theme_bw()
+  theme_bw() + 
+  ylab("dpf / min(dpf)")
 
-
-df 
+# выбираем слова
+df |> 
+  filter(rank < x_deriv_1) |> 
+  pull(item2)
 

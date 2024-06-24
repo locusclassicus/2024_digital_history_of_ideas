@@ -15,7 +15,8 @@ stopwords_ru <- c(
 
 # уберем повторы и упорядочим по алфавиту
 stopwords_ru <- sort(unique(stopwords_ru))
-stopwords_ru <- c(stopwords_ru, "это", "весь", "сей", "твой")
+stopwords_ru <- c(stopwords_ru, 
+                  "это", "весь", "сей", "твой")
 
 liza_df <- liza_df |> 
   anti_join(tibble(lemma = stopwords_ru))

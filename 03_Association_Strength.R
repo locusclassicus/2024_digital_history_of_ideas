@@ -77,7 +77,8 @@ sel_mi |>
               color = "tomato") +
   theme_bw()
 
-sel_mi 
+sel_mi |> 
+  select(-tf)
 
 cor.test(sel_mi$tf, sel_mi$MI)
 
