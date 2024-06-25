@@ -6,7 +6,6 @@ library(tidyverse)
 library(tidytext)
 library(widyr)
 
-
 # this is my sliding windows data
 load("./data/liza_wind.Rdata")
 window_size = 10
@@ -42,7 +41,7 @@ rels$o11 <- rels$count
 rels$o12 <- rels$focal_e - rels$count
 rels$o21 <- rels$bound_e - rels$count
 rels$o22 <- thisN - (rels$focal_e + rels$bound_e)
-rels$e11 <- (rels$focal_e * rels$bound_e)/thisN
+rels$e11 <- (rels$focal_e/thisN) * (rels$bound_e/thisN)
 rels$e12 <- ((rels$o11 +rels$o22) * (rels$o12 + rels$o22))/thisN
 
 save(rels, file = "./data/rels.Rdata")
