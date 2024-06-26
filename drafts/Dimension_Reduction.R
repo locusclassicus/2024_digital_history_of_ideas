@@ -1,7 +1,7 @@
 library(tidyr)
 library(widyr)
 library(uwot)
-source("NN.R")
+source("./helper_functions/nearest_neighbors.R")
 
 # svd 
 tidy_vectors <- sel  |> 

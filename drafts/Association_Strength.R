@@ -1,3 +1,4 @@
+# this is replaced by Confidence_Intervals.R
 # based on code by agricolaMZ
 # based on S. Evert's lecture: https://stephanie-evert.de/SIGIL/sigil_R/materials/04_collocation_analysis.pdf
 
