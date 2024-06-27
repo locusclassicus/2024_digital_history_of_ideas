@@ -1,9 +1,11 @@
+library(tidyverse)
 library(igraph)
 library(ggraph)
+load("./data/rels.Rdata")
 
 rels_graph_data <- rels |> 
   select(focal, bound, dpf) |> 
-  filter(dpf > 1) |> 
+  filter(dpf > 0) |> 
   rename(weight = dpf)
 
 rels_graph_data <- rels_graph_data |> 
