@@ -26,16 +26,16 @@ merged <- delete.vertices(merged,
                               V(merged)[ degree(merged) < 26] )
 # 
 # # plot
-# ggraph(merged, layout = "stress") + 
+# ggraph(merged, layout = "stress") +
 #   geom_edge_link(alpha = 0.5) +
-#   geom_node_point(aes(fill = as.factor(vertex_attr(merged)$color)), 
+#   geom_node_point(aes(fill = as.factor(vertex_attr(merged)$color)),
 #                   size = 4,
 #                   shape = 21,
-#                   show.legend = FALSE) + 
+#                   show.legend = FALSE) +
 #   geom_label_repel(aes(label = name, x = x, y = y,
 #                        color = as.factor(vertex_attr(merged)$color)),
 #                    show.legend = FALSE,
-#                    nudge_y = 0.05, 
+#                    nudge_y = 0.05,
 #                    label.size = 1#,
 #                    #fontface = "bold"
 #   ) +
@@ -47,8 +47,7 @@ td <- toVisNetworkData(merged)
 ws <- select(td$edges, starts_with("weight"))
 #ws[is.na(ws)] <- 0
 td$edges$value <- rowSums(ws)
-td$nodes$font.size = 10
-conc_output <- "none"
+td$nodes$font.size = 20
 
 visNetwork(nodes=td$nodes,
            edges=td$edges,
@@ -56,5 +55,5 @@ visNetwork(nodes=td$nodes,
            width='100%') |>
   visIgraphLayout(type="full")  |>
   visOptions(highlightNearest = list(enabled = T, hover = T),
-             nodesIdSelection = T)  |>
+             nodesIdSelection = FALSE)  |>
   visExport()

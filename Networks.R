@@ -11,7 +11,7 @@ rels_graph_data <- rels |>
 rels_graph_data <- rels_graph_data |> 
   group_by(focal) |> 
   arrange(-weight) |> 
-  slice_head(n = 20) |> 
+  slice_head(n = 10) |> 
   ungroup()
 
 g <- graph_from_data_frame(rels_graph_data, 
